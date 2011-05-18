@@ -65,7 +65,7 @@ BinarySearchTree::remove = (data) ->
   parent = null
   current = @_root
   
-  while not found and current
+  while not found and current?
     if data < current.data
       parent = current
       current = current.left
