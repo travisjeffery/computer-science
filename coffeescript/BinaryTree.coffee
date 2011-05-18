@@ -45,4 +45,18 @@ BinarySearchTree::add = (data) ->
           current = current.right
       else
         break
-    
+
+BinarySearchTree::contains = (value) ->
+  found = false
+  current = @root
+  
+  while not found and current
+    if value < current.value
+      current = current.left
+    else if value > current.value
+      current = current.right
+    else
+      found = true
+      
+  found
+
