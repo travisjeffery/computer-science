@@ -140,7 +140,7 @@ BinarySearchTree::size = () ->
 
 BinarySearchTree::toArray = () ->
   result = []
-  @traverse((node) -> result.push.node.data)
+  @traverse((node) -> result.push node.data)
   result
 
 BinarySearchTree::toString = () ->
@@ -152,7 +152,7 @@ BinarySearchTree::traverse = (process) ->
       if node.left isnt null
         inOrder node.left
         
-      process.call this, node
+      process.call @, node
       
       if node.right isnt null
         inOrder node.right
