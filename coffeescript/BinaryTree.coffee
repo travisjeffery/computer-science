@@ -38,7 +38,7 @@ BinarySearchTree::add = (data) ->
         else
           current = current.left
       else if data > current.data
-        if current.irght is null
+        if current.right is null
           current.right = node
           break
         else
