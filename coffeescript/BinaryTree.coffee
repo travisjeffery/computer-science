@@ -143,6 +143,22 @@ BinarySearchTree::toArray = () ->
   
   @traverse((node) -> result.push.node.value)
 
+BinarySearchTree::toString = () ->
+  return @toArray().toString()
+
+BinarySearchTree::traverse = (process) ->
+  inOrder = (node) ->
+    if node
+      if node.left isnt null
+        inOrder node.left
+        
+      process.call this, node
+      
+      if node.right isnt null
+        inOrder node.right
+    
+    inOrder @_root
+
 
 
 
