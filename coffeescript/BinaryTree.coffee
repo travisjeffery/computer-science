@@ -152,9 +152,3 @@ BinarySearchTree::traverse = (process) ->
         inOrder node.right
     
   inOrder @root
-
-bt = new BinarySearchTree
-bt.add(3)
-bt.add(5)
-bt.toString()
-# alert bt.toString()
