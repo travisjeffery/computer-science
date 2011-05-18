@@ -157,7 +157,7 @@ BinarySearchTree::traverse = (process) ->
       if node.right isnt null
         inOrder node.right
     
-    inOrder @_root
+  inOrder @_root
 
 
 
