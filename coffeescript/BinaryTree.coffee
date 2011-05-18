@@ -14,7 +14,7 @@ Node::getLeft = () ->
 Node::getRight = () ->
   return @_right
   
-Node::getValue = () ->
+Node::getData = () ->
   return @_data
 
 Node::toString = () ->
@@ -34,18 +34,18 @@ BinarySearchTree::add = (data) ->
     current = @_root
     
     while true
-      if data < current.data
-        if current.left is null
-          current.left = node
+      if data < current.getData()
+        if current.getLeft() is null
+          current.getLeft() = node
           break
         else
-          current = current.left
-      else if data > current.data
-        if current.right is null
-          current.right = node
+          current = current.getLeft()
+      else if data > current.getData()
+        if current.getRight() is null
+          current.getRight() = node
           break
         else
-          current = current.right
+          current = current.getRight()
       else
         break
 
@@ -54,10 +54,10 @@ BinarySearchTree::contains = (data) ->
   current = @_root
   
   while not found and current
-    if data < current.data
-      current = current.left
-    else if data > current.data
-      current = current.right
+    if data < current.getData()
+      current = current.getLeft()
+    else if data > current.getData()
+      current = current.getRight()
     else
       found = true
       
@@ -69,17 +69,17 @@ BinarySearchTree::remove = (data) ->
   current = @_root
   
   while not found and current?
-    if data < current.data
+    if data < current.getData()
       parent = current
-      current = current.left
-    else if data > current.data
+      current = current.getLeft()
+    else if data > current.getData()
       parent = current
-      current = current.right
+      current = current.getRight()
     else
       found = true
   
   if found
-    childCount = (if current.left isnt null then 1 else 0) + (if current.right isnt null then 1 else 0)
+    childCount = (if current.getLeft() isnt null then 1 else 0) + (if current.getRight() isnt null then 1 else 0)
     
     if current is @_root
       switch childCount
@@ -87,7 +87,7 @@ BinarySearchTree::remove = (data) ->
           @_root = null
           break
         when 1
-          @_root = if current.right is null then current.left else current.right
+          @_root = if current.getRight() is null then current.getLeft() else current.getRight()
           break
         when 2
           replacement = @_root.left
@@ -108,19 +108,19 @@ BinarySearchTree::remove = (data) ->
     else
       switch childCount
         when 0
-          if current.data < parent.data
+          if current.getData() < parent.data
             parent.left = null
           else
             parent.right = null
           break
         when 1
-          if current.data < parent.data
-            parent.left = if current.left is null then current.right else current.left
+          if current.getData() < parent.data
+            parent.left = if current.getLeft() is null then current.getRight() else current.getLeft()
           else
-            parent.right = if current.left is null then current.right else current.left
+            parent.right = if current.getLeft() is null then current.getRight() else current.getLeft()
           break
         when 2
-          replacement = current.left
+          replacement = current.getLeft()
           replacementParent = current
           
           while replacement.right isnt null
@@ -129,9 +129,9 @@ BinarySearchTree::remove = (data) ->
             
           replacementParent.right = replacement.left
           
-          replacement.right = current.right
-          replacement.left = current.left
-          if current.data < parent.data
+          replacement.right = current.getRight()
+          replacement.left = current.getLeft()
+          if current.getData() < parent.data
             parent.left = replacement
           else
             parent.right = replacement
