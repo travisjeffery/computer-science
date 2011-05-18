@@ -102,36 +102,36 @@ BinarySearchTree::remove = (value) ->
           
           @_root = replacement
           
-      else
-        switch childCount
-          when 0
-            if current.value < parent.value
-              parent.left = null
-            else
-              parent.right = null
-            break
-          when 1
-            if current.value < parent.value
-              parent.left = if current.left is null then current.right else current.left
-            else
-              parent.right = if current.left is null then current.right else current.left
-            break
-          when 2
-            replacement = current.left
-            replacementParent = current
+    else
+      switch childCount
+        when 0
+          if current.value < parent.value
+            parent.left = null
+          else
+            parent.right = null
+          break
+        when 1
+          if current.value < parent.value
+            parent.left = if current.left is null then current.right else current.left
+          else
+            parent.right = if current.left is null then current.right else current.left
+          break
+        when 2
+          replacement = current.left
+          replacementParent = current
+          
+          while replacement.right isnt null
+            replacementParent = replacement
+            replacement = replacement.right
             
-            while replacement.right isnt null
-              replacementParent = replacement
-              replacement = replacement.right
-              
-            replacementParent.right = replacement.left
-            
-            replacement.right = current.right
-            replacement.left = current.left
-            if current.value < parent.value
-              parent.left = replacement
-            else
-              parent.right = replacement
+          replacementParent.right = replacement.left
+          
+          replacement.right = current.right
+          replacement.left = current.left
+          if current.value < parent.value
+            parent.left = replacement
+          else
+            parent.right = replacement
 
 BinarySearchTree::size = () ->
   length = 0
@@ -159,9 +159,6 @@ BinarySearchTree::traverse = (process) ->
     
   inOrder @_root
 
-
-
-
-        
-  
-
+bt = new BinarySearchTree
+bt.add(3)
+alert bt.toString()
