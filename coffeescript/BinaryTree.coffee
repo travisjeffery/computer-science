@@ -135,13 +135,13 @@ BinarySearchTree::remove = (data) ->
 
 BinarySearchTree::size = () ->
   length = 0
-  @traverse (node) -> result.push node.data
-  result
+  @traverse (node) -> length++
+  length
 
 BinarySearchTree::toArray = () ->
   result = []
-  
   @traverse((node) -> result.push.node.data)
+  result
 
 BinarySearchTree::toString = () ->
   return @toArray().toString()
