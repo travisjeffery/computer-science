@@ -134,7 +134,7 @@ BinarySearchTree::size = () ->
 
 BinarySearchTree::toArray = () ->
   result = []
-  @traverse((node) -> result.push node.data)
+  @traverse (node) -> result.push node.data
   result
 
 BinarySearchTree::toString = () ->
