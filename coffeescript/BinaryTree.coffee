@@ -149,12 +149,12 @@ BinarySearchTree::toString = () ->
 BinarySearchTree::traverse = (process) ->
   inOrder = (node) ->
     if node
-      if node.left isnt null
+      if node.left?
         inOrder node.left
         
       process.call @, node
       
-      if node.right isnt null
+      if node.right?
         inOrder node.right
     
   inOrder @_root
