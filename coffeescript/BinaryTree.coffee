@@ -31,13 +31,13 @@ BinarySearchTree::add = (data) ->
     current = @_root
     
     while true
-      if value < current.value
+      if data < current.data
         if current.left is null
           current.left = node
           break
         else
           current = current.left
-      else if value > current.value
+      else if data > current.data
         if current.irght is null
           current.right = node
           break
@@ -46,30 +46,30 @@ BinarySearchTree::add = (data) ->
       else
         break
 
-BinarySearchTree::contains = (value) ->
+BinarySearchTree::contains = (data) ->
   found = false
   current = @_root
   
   while not found and current
-    if value < current.value
+    if data < current.data
       current = current.left
-    else if value > current.value
+    else if data > current.data
       current = current.right
     else
       found = true
       
   found
 
-BinarySearchTree::remove = (value) ->
+BinarySearchTree::remove = (data) ->
   found = false
   parent = null
   current = @_root
   
   while not found and current
-    if value < current.value
+    if data < current.data
       parent = current
       current = current.left
-    else if value > current.value
+    else if data > current.data
       parent = current
       current = current.right
     else
@@ -105,13 +105,13 @@ BinarySearchTree::remove = (value) ->
     else
       switch childCount
         when 0
-          if current.value < parent.value
+          if current.data < parent.data
             parent.left = null
           else
             parent.right = null
           break
         when 1
-          if current.value < parent.value
+          if current.data < parent.data
             parent.left = if current.left is null then current.right else current.left
           else
             parent.right = if current.left is null then current.right else current.left
@@ -128,20 +128,20 @@ BinarySearchTree::remove = (value) ->
           
           replacement.right = current.right
           replacement.left = current.left
-          if current.value < parent.value
+          if current.data < parent.data
             parent.left = replacement
           else
             parent.right = replacement
 
 BinarySearchTree::size = () ->
   length = 0
-  @traverse (node) -> result.push node.value
+  @traverse (node) -> result.push node.data
   result
 
 BinarySearchTree::toArray = () ->
   result = []
   
-  @traverse((node) -> result.push.node.value)
+  @traverse((node) -> result.push.node.data)
 
 BinarySearchTree::toString = () ->
   return @toArray().toString()
