@@ -27,13 +27,13 @@ BinarySearchTree::add = (data) ->
     while true
       if data < current.data
         if current.left is null
-          current.setLeft node
+          current.left = node
           break
         else
           current = current.left
       else if data > current.data
         if current.right is null
-          current.right node
+          current.right = node
           break
         else
           current = current.right
@@ -155,4 +155,6 @@ BinarySearchTree::traverse = (process) ->
 
 bt = new BinarySearchTree
 bt.add(3)
-alert bt.toString()
+bt.add(5)
+bt.toString()
+# alert bt.toString()
