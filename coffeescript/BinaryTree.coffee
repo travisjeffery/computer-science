@@ -17,6 +17,9 @@ Node::getRight = () ->
 Node::getValue = () ->
   return @_data
 
+Node::toString = () ->
+  return @getValue().toString()
+
 class BinarySearchTree
   
   BinarySearchTree = () ->
