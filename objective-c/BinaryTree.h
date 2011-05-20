@@ -15,10 +15,12 @@
 }
 
 @property (retain, nonatomic) Node *root;
+@property (nonatomic) int size;
 
 - (id)initWithRoot:(Node *)_root;
 - (BOOL)contains:(int)_data;
 - (void)add:(int)_data;
-
+- (void)remove:(int)_data;
+- (void)traverse:(int (^)(Node *))process;
 
 @end
