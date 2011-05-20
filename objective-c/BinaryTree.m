@@ -177,7 +177,7 @@
 - (int)size
 {
     __block int length = 0;
-    __block int(^process)(Node *);
+    int(^process)(Node *);
     process = ^(Node *node) {
         return length++;
     };
