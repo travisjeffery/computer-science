@@ -166,7 +166,7 @@ module BinaryTree
           in_order.call node.left
         end
 
-        b.call node
+        b.call node unless b.nil?
 
         if !node.right.nil?
           in_order.call node.right
