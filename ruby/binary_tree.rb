@@ -9,7 +9,7 @@ module BinaryTree
     end
 
     def to_s
-      "#{@data}"
+      "#{data}"
     end
   end
 

@@ -7,16 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32507F9B1888B9F0002E2637 /* TRVSTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 32507F991888B9F0002E2637 /* TRVSTree.m */; };
 		32CB0A0518884C840005886C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32CB0A0418884C840005886C /* XCTest.framework */; };
 		32CB0A0B18884C840005886C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 32CB0A0918884C840005886C /* InfoPlist.strings */; };
 		32CB0A0D18884C840005886C /* OS_X_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 32CB0A0C18884C840005886C /* OS_X_Tests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		32CB09F918884C770005886C /* BinaryTree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BinaryTree.h; sourceTree = "<group>"; };
-		32CB09FA18884C770005886C /* BinaryTree.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BinaryTree.m; sourceTree = "<group>"; };
-		32CB09FB18884C770005886C /* Node.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
-		32CB09FC18884C770005886C /* Node.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
+		32507F981888B9F0002E2637 /* TRVSTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TRVSTree.h; sourceTree = "<group>"; };
+		32507F991888B9F0002E2637 /* TRVSTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TRVSTree.m; sourceTree = "<group>"; };
 		32CB0A0118884C840005886C /* OS X Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OS X Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CB0A0418884C840005886C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		32CB0A0818884C840005886C /* OS X Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OS X Tests-Info.plist"; sourceTree = "<group>"; };
@@ -40,10 +39,8 @@
 		32CB09F218884C670005886C = {
 			isa = PBXGroup;
 			children = (
-				32CB09F918884C770005886C /* BinaryTree.h */,
-				32CB09FA18884C770005886C /* BinaryTree.m */,
-				32CB09FB18884C770005886C /* Node.h */,
-				32CB09FC18884C770005886C /* Node.m */,
+				32507F981888B9F0002E2637 /* TRVSTree.h */,
+				32507F991888B9F0002E2637 /* TRVSTree.m */,
 				32CB0A0618884C840005886C /* OS X Tests */,
 				32CB0A0318884C840005886C /* Frameworks */,
 				32CB0A0218884C840005886C /* Products */,
@@ -147,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32CB0A0D18884C840005886C /* OS_X_Tests.m in Sources */,
+				32507F9B1888B9F0002E2637 /* TRVSTree.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +279,7 @@
 				32CB0A1118884C840005886C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
