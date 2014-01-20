@@ -13,17 +13,17 @@
 @interface KDTree : NSObject
 
 @property (nonatomic, strong) KDNode *rootNode;
-@property (nonatomic, copy) NSArray *point;
 
 - (instancetype)initWithPoints:(NSArray *)points depth:(NSUInteger)depth;
 - (NSArray *)findK:(NSUInteger)k nearestNeighbors:(NSArray *)point;
 
 @end
 
-@interface KDNode : KDTree
+@interface KDNode : NSObject
 
 @property (nonatomic, strong) KDNode *leftChild;
 @property (nonatomic, strong) KDNode *rightChild;
+@property (nonatomic, copy) NSArray *point;
 
 - (instancetype)initWithPoint:(NSArray *)point leftChild:(KDNode *)leftChild rightChild:(KDNode *)rightChild;
 - (BOOL)isLeaf;

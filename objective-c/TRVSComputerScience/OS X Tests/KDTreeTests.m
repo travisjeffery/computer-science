@@ -25,7 +25,7 @@
 }
 
 - (void)testFindingNearestNeighbour {
-  NSLog(@"%@", [self.tree findK:4 nearestNeighbors:@[@3.0, @2.0]]);
+  NSLog(@"%@", [self.tree findK:1 nearestNeighbors:@[@1.0, @2.0]]);
 }
 
 @end

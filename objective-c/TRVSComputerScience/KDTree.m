@@ -16,7 +16,7 @@
 }
 
 - (void)findLargestDistance {
-  if (self.k > self.currentBest.count) {
+  if (self.k >= self.currentBest.count) {
     self.largestDistance = [[self.currentBest lastObject][1] doubleValue];
   } else {
     self.largestDistance = [self.currentBest[self.k - 1][1] doubleValue];
@@ -26,41 +26,40 @@
 - (void)enqueuePoint:(NSArray *)point {
   CGFloat distance = [self distanceUsingPoint:point];
   
+  __block BOOL foundBest = NO;
+  
   [self.currentBest enumerateObjectsUsingBlock:^(NSArray *data, NSUInteger idx, BOOL *stop) {
     if (idx == self.k) {
+      *stop = foundBest = YES;
       return;
     }
     
     if ([data[1] doubleValue] > distance) {
       [self.currentBest insertObject:@[point, @(distance)] atIndex:idx];
       [self findLargestDistance];
-      return;
+      *stop = foundBest = YES;
     }
    }];
+  
+  if (foundBest) return;
   
   [self.currentBest addObject:@[point, @(distance)]];
   [self findLargestDistance];
 }
 
 - (NSArray *)kNearestNeighbors {
-  if (self.currentBest.count == 0)
-    return @[];
+  NSMutableArray *points = [[NSMutableArray alloc] initWithCapacity:self.k];
   
-  if (self.currentBest.count < self.k)
-    return self.currentBest;
-  
-  NSMutableArray *neighbors = [[NSMutableArray alloc] init];
-  
-  [self.currentBest enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-    if (idx < self.currentBest.count - self.k) {
+  [self.currentBest enumerateObjectsUsingBlock:^(NSArray *data, NSUInteger idx, BOOL *stop) {
+    if (idx == self.k) {
       *stop = YES;
       return;
     }
     
-    [neighbors addObject:obj];
+    [points addObject:data[0]];
   }];
   
-  return neighbors;
+  return points;
 }
 
 - (CGFloat)distanceUsingPoint:(NSArray *)point {
@@ -91,6 +90,40 @@
   return self;
 }
 
+- (KDNode *)initTreeWithPoints:(NSArray *)points depth:(NSUInteger)depth {
+  if (points.count == 0)
+    return nil;
+  
+  self = [self init];
+  
+  if (self) {
+    NSUInteger axis = depth % [points[0] count];
+    points = [self sortedPoints:points usingAxis:axis];
+    NSUInteger medianIndex = points.count / 2;
+    
+    self.point = points[medianIndex];
+
+    NSRange leftRange = NSMakeRange(0, medianIndex);
+    self.leftChild = [[KDNode alloc] initTreeWithPoints:[points subarrayWithRange:leftRange] depth:depth + 1];
+    
+    medianIndex++;
+    NSUInteger offsetLength = points.count - medianIndex;
+    NSRange rightRange = NSMakeRange(medianIndex, offsetLength);
+    self.rightChild = [[KDNode alloc] initTreeWithPoints:[points subarrayWithRange:rightRange] depth:depth + 1];
+  }
+  
+  return self;
+}
+
+- (NSArray *)sortedPoints:(NSArray *)points usingAxis:(NSUInteger)axis {
+  return [points sortedArrayUsingComparator:^NSComparisonResult(NSArray *pointA, NSArray *pointB) {
+    NSNumber *coordinateA = pointA[axis];
+    NSNumber *coordinateB = pointB[axis];
+    
+    return [coordinateA compare:coordinateB];
+  }];
+}
+
 - (BOOL)isLeaf {
   return self.leftChild == nil && self.rightChild == nil;
 }
@@ -104,36 +137,13 @@
 @implementation KDTree
 
 - (instancetype)initWithPoints:(NSArray *)points depth:(NSUInteger)depth {
-  if (points.count == 0)
-    return nil;
-  
   self = [self init];
   
   if (self) {
-    NSUInteger axis = depth % [points[0] count];
-    points = [self sortedPoints:points usingAxis:axis];
-    NSUInteger medianIndex = points.count / 2;
-    self.point = points[medianIndex];
-    NSRange leftRange = NSMakeRange(0, medianIndex);
-    medianIndex++;
-    NSUInteger offsetLength = points.count - medianIndex;
-    NSRange rightRange = NSMakeRange(medianIndex, offsetLength);
-    KDNode *leftChild = [[KDNode alloc] initWithPoints:[points subarrayWithRange:leftRange] depth:depth + 1];
-    KDNode *rightChild = [[KDNode alloc] initWithPoints:[points subarrayWithRange:rightRange] depth:depth + 1];
-    
-    self.rootNode = [[KDNode alloc] initWithPoint:self.point leftChild:leftChild rightChild:rightChild];
+    self.rootNode = [[KDNode alloc] initTreeWithPoints:points depth:0];
   }
   
   return self;
-}
-
-- (NSArray *)sortedPoints:(NSArray *)points usingAxis:(NSUInteger)axis {
-  return [points sortedArrayUsingComparator:^NSComparisonResult(NSArray *pointA, NSArray *pointB) {
-    NSNumber *coordinateA = pointA[axis];
-    NSNumber *coordinateB = pointB[axis];
-    
-    return [coordinateA compare:coordinateB];
-  }];
 }
 
 - (NSArray *)findK:(NSUInteger)k nearestNeighbors:(NSArray *)point {
@@ -168,7 +178,7 @@
     farTree = node.leftChild;
   }
   
-  [self findK:k nearestNeighborsToPoint:node.point node:nearTree depth:depth + 1 bestNeighbors:neighbors];
+  [self findK:k nearestNeighborsToPoint:point node:nearTree depth:depth + 1 bestNeighbors:neighbors];
   
   [neighbors enqueuePoint:node.point];
   
