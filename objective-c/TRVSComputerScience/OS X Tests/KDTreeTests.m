@@ -20,13 +20,12 @@
 - (void)setUp {
   [super setUp];
   
-  NSArray *coordinates = @[@[@3.4, @2.1], @[@4.2, @5.1], @[@1.0, @2.0], @[@8.0, @5.3]];
-  self.tree = [[KDTree alloc] initWithCoordinates:coordinates];    
+  NSArray *points = @[@[@3.4, @2.1], @[@4.2, @5.1], @[@1.0, @2.0], @[@8.0, @5.3]];
+  self.tree = [[KDTree alloc] initWithPoints:points depth:0];
 }
 
 - (void)testFindingNearestNeighbour {
-  KDLeaf *nearestLeaf = [self.tree findNearestNeighbor:@[@4.0, @5.0]];
-  NSLog(@"%@", nearestLeaf);
+  NSLog(@"%@", [self.tree findK:4 nearestNeighbors:@[@3.0, @2.0]]);
 }
 
 @end
