@@ -16,5 +16,6 @@ typedef NSComparisonResult (^TRVSPriorityQueueComparator)(id a, id b);
 - (BOOL)isEmpty;
 - (void)enqueue:(id)object;
 - (id)dequeue;
+- (NSArray *)allObjects;
 
 @end

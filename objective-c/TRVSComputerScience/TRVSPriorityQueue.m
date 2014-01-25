@@ -86,4 +86,19 @@ CFStringRef TRVSPriorityQueueCopyDescription(const void *ptr) {
   return CFBinaryHeapGetCount(self.heap) == 0;
 }
 
+- (NSArray *)allObjects {
+  CFIndex count = CFBinaryHeapGetCount(self.heap);
+  const void **values = calloc(sizeof(*values), count);
+
+  CFBinaryHeapGetValues(self.heap, values);
+
+  CFArrayRef array =
+      CFArrayCreate(kCFAllocatorDefault, values, count, &kCFTypeArrayCallBacks);
+  NSArray *objects = (__bridge NSArray *)(array);
+
+  free(values);
+
+  return objects;
+}
+
 @end

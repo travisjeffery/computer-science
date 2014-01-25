@@ -2,7 +2,7 @@
 //  TRVSPriorityQueueTests.m
 //  TRVSComputerScience
 //
-//  Created by Travis Jeffery on 1/19/14.
+//  Created by Travis Jeffery on 1/20/14.
 //
 //
 
@@ -11,7 +11,7 @@
 
 @interface TRVSPriorityQueueTests : XCTestCase
 
-@property(nonatomic, strong) TRVSPriorityQueue *queue;
+@property (nonatomic, strong) TRVSPriorityQueue *queue;
 
 @end
 
@@ -19,19 +19,20 @@
 
 - (void)setUp {
   [super setUp];
-
-  self.queue = [[TRVSPriorityQueue alloc] initWithComparator:^NSComparisonResult(id a, id b) {
+  
+  self.queue = [[TRVSPriorityQueue alloc] initWithComparator:^NSComparisonResult(NSNumber *a, NSNumber *b) {
     return [a compare:b];
   }];
 
-  [self.queue enqueue:@5];
-  [self.queue enqueue:@3];
-  [self.queue enqueue:@10];
-  [self.queue enqueue:@1];
+  [@[@1, @4, @5, @6, @3, @7] enumerateObjectsUsingBlock:^(NSNumber *a, NSUInteger idx, BOOL *stop) {
+    [self.queue enqueue:a];
+  }];
 }
 
-- (void)testQueue {
-  XCTAssert([self.queue.dequeue isEqualToNumber:@1]);
+- (void)testObjectsAreInOrder {
+  NSArray *actualObjects = @[@1, @3, @4, @5, @6, @7];
+  
+  XCTAssertEqualObjects(actualObjects, [self.queue allObjects]);
 }
 
 @end
