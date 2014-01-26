@@ -24,8 +24,21 @@
   self.tree = [[KDTree alloc] initWithPoints:points depth:0];
 }
 
-- (void)testFindingNearestNeighbour {
-  NSLog(@"%@", [self.tree findK:1 nearestNeighbors:@[@1.0, @2.0]]);
+- (void)testFoundPointsBoundByK {
+  NSArray *points = [self.tree findK:2 nearestNeighborsToPoint:@[@1.1, @2.1]];
+  XCTAssertEqual(2, points.count);
+}
+
+- (void)testFindingExactPoint {
+  NSArray *actualPoint = [[self.tree findK:1 nearestNeighborsToPoint:@[@1.0, @2.0]] firstObject];
+  NSArray *expectedPoint = @[@1.0, @2.0];
+  XCTAssertEqualObjects(expectedPoint, actualPoint);
+}
+
+- (void)testFindingNearestNonExactPoint {
+  NSArray *actualPoint = [[self.tree findK:1 nearestNeighborsToPoint:@[@1.1, @2.1]] firstObject];
+  NSArray *expectedPoint = @[@1.0, @2.0];
+  XCTAssertEqualObjects(expectedPoint, actualPoint);
 }
 
 @end

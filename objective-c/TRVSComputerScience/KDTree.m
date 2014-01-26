@@ -9,17 +9,17 @@
     self.point = point;
     self.k = k;
     self.largestDistance = 0.0f;
-    self.currentBest = [[NSMutableArray alloc] init];
+    self.nearestNeighbors = [[NSMutableArray alloc] init];
   }
   
   return self;
 }
 
 - (void)findLargestDistance {
-  if (self.k >= self.currentBest.count) {
-    self.largestDistance = [[self.currentBest lastObject][1] doubleValue];
+  if (self.k >= self.nearestNeighbors.count) {
+    self.largestDistance = [[self.nearestNeighbors lastObject][1] doubleValue];
   } else {
-    self.largestDistance = [self.currentBest[self.k - 1][1] doubleValue];
+    self.largestDistance = [self.nearestNeighbors[self.k - 1][1] doubleValue];
   }
 }
 
@@ -28,14 +28,14 @@
   
   __block BOOL foundBest = NO;
   
-  [self.currentBest enumerateObjectsUsingBlock:^(NSArray *data, NSUInteger idx, BOOL *stop) {
+  [self.nearestNeighbors enumerateObjectsUsingBlock:^(NSArray *data, NSUInteger idx, BOOL *stop) {
     if (idx == self.k) {
       *stop = foundBest = YES;
       return;
     }
     
     if ([data[1] doubleValue] > distance) {
-      [self.currentBest insertObject:@[point, @(distance)] atIndex:idx];
+      [self.nearestNeighbors insertObject:@[point, @(distance)] atIndex:idx];
       [self findLargestDistance];
       *stop = foundBest = YES;
     }
@@ -43,14 +43,14 @@
   
   if (foundBest) return;
   
-  [self.currentBest addObject:@[point, @(distance)]];
+  [self.nearestNeighbors addObject:@[point, @(distance)]];
   [self findLargestDistance];
 }
 
 - (NSArray *)kNearestNeighbors {
   NSMutableArray *points = [[NSMutableArray alloc] initWithCapacity:self.k];
   
-  [self.currentBest enumerateObjectsUsingBlock:^(NSArray *data, NSUInteger idx, BOOL *stop) {
+  [self.nearestNeighbors enumerateObjectsUsingBlock:^(NSArray *data, NSUInteger idx, BOOL *stop) {
     if (idx == self.k) {
       *stop = YES;
       return;
@@ -146,7 +146,7 @@
   return self;
 }
 
-- (NSArray *)findK:(NSUInteger)k nearestNeighbors:(NSArray *)point {
+- (NSArray *)findK:(NSUInteger)k nearestNeighborsToPoint:(NSArray *)point {
   if (self.rootNode == nil)
     return @[];
   
